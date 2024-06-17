@@ -12,6 +12,7 @@ export default {
       'photos': '',
       'categories': '',
       loading: false,
+      featured: 0
     }
   },
   methods: {
@@ -61,7 +62,28 @@ export default {
             console.error('No photo available:', error);
           });
       }
+    },
+
+  filterByFeatured() {
+  this.loading = true
+  this.photos = ''
+    if (this.featured) {
+      const featuredUrl = `${this.base_api_url + this.photos_endpoint}?featured=${this.featured}`
+      axios.get(featuredUrl)
+          .then(response => {
+            console.log(response);
+            // console.log(featuredUrl);
+            this.photos = response.data.results.data;
+            this.loading = false
+          })
+          .catch(error => {
+            console.error('No photo available:', error);
+          });
+    } else {
+      // console.log(`${this.base_api_url + this.photos_endpoint}?featured=${this.featured}`);
+      this.getPhotos(this.base_api_url + this.photos_endpoint)
     }
+  }
 },
 mounted() {
   const photosUrl = this.base_api_url + this.photos_endpoint
@@ -82,10 +104,16 @@ mounted() {
 
         <div class="mb-3">
             <label class="form-label">Filter by category</label>
-            <select class="form-select" name="selectedCategory" id="selectedCategory" v-model="selectedCategory" @change="filterByCategory()">
-                <option selected disabled>Select one</option>
-                <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-            </select>
+            <div class="d-flex">
+              <select class="form-select" name="selectedCategory" id="selectedCategory" v-model="selectedCategory" @change="filterByCategory()">
+                  <option selected disabled>Select one</option>
+                  <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+              </select>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1" v-model="featured" @change="filterByFeatured()">
+                    <label class="form-check-label" for="featured">Featured</label>
+                </div>
+            </div>
         </div>
 
         <div class="container text-center">
