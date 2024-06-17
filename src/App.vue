@@ -18,6 +18,7 @@ export default {
   methods: {
     getPhotos(url){
     this.loading = true
+    this.photos = ''
 
     axios
     .get(url)
@@ -47,42 +48,20 @@ export default {
   },
 
   filterByCategory() {
-    this.loading = true
-    this.photos = ''
       if (this.selectedCategory) {
         const filteredUrl = `${this.base_api_url + this.photos_endpoint}?category_id=${this.selectedCategory}`
-        axios.get(filteredUrl)
-          .then(response => {
-            console.log(response);
-            console.log(filteredUrl);
-            this.photos = response.data.results.data;
-            this.loading = false
-          })
-          .catch(error => {
-            console.error('No photo available:', error);
-          });
+        this.getPhotos(filteredUrl);
       }
     },
 
   filterByFeatured() {
-  this.loading = true
-  this.photos = ''
     if (this.featured) {
       const featuredUrl = `${this.base_api_url + this.photos_endpoint}?featured=${this.featured}`
-      axios.get(featuredUrl)
-          .then(response => {
-            console.log(response);
-            // console.log(featuredUrl);
-            this.photos = response.data.results.data;
-            this.loading = false
-          })
-          .catch(error => {
-            console.error('No photo available:', error);
-          });
+      this.getPhotos(featuredUrl);
     } else {
-      // console.log(`${this.base_api_url + this.photos_endpoint}?featured=${this.featured}`);
-      this.getPhotos(this.base_api_url + this.photos_endpoint)
+      this.getPhotos(this.base_api_url + this.photos_endpoint);
     }
+    console.log(`${this.base_api_url + this.photos_endpoint}?featured=${this.featured}`);
   }
 },
 mounted() {
