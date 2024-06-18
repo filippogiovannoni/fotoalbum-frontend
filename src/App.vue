@@ -143,9 +143,24 @@ export default {
                 :src="base_api_url + '/storage/' + photo.image_url" alt="Immagine {{ photo.title }}">
               <div class="overlay"></div>
             </div>
-            <div class="photo-info position-absolute top-50 start-50 translate-middle text-center text-white">
+            <div style="top: 60%;"
+              class="photo-info position-absolute start-50 translate-middle text-center text-white">
               <h5 class="photo-title fs-3">{{ photo.title }}</h5>
               <p class="photo-category">{{ photo.category.name }}</p>
+              <p>
+                <button class="btn btn-sm btn-gradient text-black" type="button" :data-bs-toggle="'collapse'"
+                  :data-bs-target="'#collapseWidthExample' + photo.id" aria-expanded="false"
+                  :aria-controls="'collapseWidthExample' + photo.id">
+                  Show description
+                </button>
+              </p>
+              <div style="min-height: 120px;">
+                <div class="collapse collapse-horizontal" :id="'collapseWidthExample' + photo.id">
+                  <div style="max-height: 200px; width: 300px;" class="text-center p-3 overflow-y-auto">
+                    {{ photo.description }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -173,19 +188,22 @@ export default {
 
   </main>
 
-  <footer class="footer">
+  <footer v-if="!loading">
     <div class="container">
 
       <div class="contact-info">
-        <p>Email: info@boolean.com</p>
+        <p>Email: info@fotografo.com</p>
         <p>Telefono: +123 456 7890</p>
       </div>
     </div>
 
     <div class="container">
       <hr class="mt-0 mb-4">
+      <div class="credits">
+        <p>Designed with <i class="fas fa-heart text-danger"></i> by Filippo</p>
+      </div>
       <div class="copyright">
-        <p>&copy; 2024 Boolean student. Tutti i diritti riservati.</p>
+        <p>&copy; 2024 Fotografo. Tutti i diritti riservati.</p>
       </div>
     </div>
   </footer>
@@ -264,6 +282,7 @@ body {
 
 .btn-gradient:hover {
   background-image: linear-gradient(to right, #8F6593, #AEA4BF);
+  color: black;
 }
 
 .btn-gradient:active {
