@@ -1,16 +1,17 @@
 <script>
+import { store } from '../../store.js'
 export default {
     name: 'AppFooter',
     data() {
         return {
-
+            store,
         }
     }
 }
 </script>
 
 <template>
-    <footer v-if="!loading">
+    <footer v-if="!store.loading">
         <div class="container">
 
             <div class="contact-info">
