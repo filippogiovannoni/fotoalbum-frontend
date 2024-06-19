@@ -28,6 +28,13 @@ export default {
 
         <PhotoGallery></PhotoGallery>
 
+        <!-- Loader -->
+        <div class="container text-center d-flex mt-5 justify-content-center">
+            <div class="loader fs-3" v-if="store.loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span class="d-block">Loading photos</span>
+            </div>
+        </div>
 
     </main>
 </template>
